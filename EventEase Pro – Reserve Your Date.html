@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EventEase Pro – Reserve Your Date</title>
+<style>
+:root{--page:#eef1f6;--ink:#101828;--muted:#5b667a;--track:#d6dce6;--btn:#2878F0;--btn-ink:#fff;--card:#fff;--line:#cfd6e2;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0b1220;--ink:#eef2f9;--muted:#9aa5b8;--track:#26324a;--card:#131c2e;--line:#2c3a56}}
+:root[data-theme="dark"]{--page:#0b1220;--ink:#eef2f9;--muted:#9aa5b8;--track:#26324a;--card:#131c2e;--line:#2c3a56}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--page);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 32px}
+h1{font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin:4px 0 14px;color:var(--muted);font-weight:700}
+.stage{container-type:inline-size;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#0a1020;color:#fff;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+@property --c1{syntax:'<color>';inherits:true;initial-value:#c93a4a}
+@property --c2{syntax:'<color>';inherits:true;initial-value:#2878F0}
+@property --c3{syntax:'<color>';inherits:true;initial-value:#1b1f4a}
+.stage{--c1:#c93a4a;--c2:#2878F0;--c3:#1b1f4a;transition:--c1 1s,--c2 1s,--c3 1s}
+.stage[data-t="1"]{--c1:#6a3df0;--c2:#c93a4a;--c3:#12203f}
+.stage[data-t="2"]{--c1:#e0457b;--c2:#d98a14;--c3:#2878F0}
+.stage[data-t="3"]{--c1:#0c9a63;--c2:#2878F0;--c3:#0b3a5c}
+.stage[data-t="4"]{--c1:#2878F0;--c2:#8e44ad;--c3:#14213d}
+.stage[data-t="5"]{--c1:#12a594;--c2:#5b5ce0;--c3:#0f2a43}
+.stage[data-t="6"]{--c1:#c9820f;--c2:#c93a4a;--c3:#0e6b3a}
+.stage[data-t="7"]{--c1:#2878F0;--c2:#d98a14;--c3:#8e44ad}
+.bg{position:absolute;inset:-10%;background:radial-gradient(45% 55% at 18% 22%,var(--c1),transparent 70%),radial-gradient(40% 50% at 86% 28%,var(--c2),transparent 70%),radial-gradient(55% 55% at 55% 105%,var(--c3),transparent 70%),#0a1020;animation:sway 12s ease-in-out infinite alternate}
+.bg::after{content:"";position:absolute;inset:0;background:rgba(6,10,22,.4)}
+@keyframes sway{to{transform:translate(3cqw,-2cqw) scale(1.1) rotate(2deg)}}
+.beam{position:absolute;top:-30%;left:5cqw;width:14cqw;height:160%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent);transform:rotate(24deg);filter:blur(1.2cqw);animation:sweep 7s ease-in-out infinite alternate}
+.b2{left:62cqw;width:9cqw;animation-delay:-3.5s;animation-duration:9s}
+@keyframes sweep{from{transform:translateX(-12cqw) rotate(24deg)}to{transform:translateX(30cqw) rotate(24deg)}}
+.floor{position:absolute;left:-30%;right:-30%;bottom:-2%;height:46%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 1px,transparent 1px 6cqw),repeating-linear-gradient(0deg,rgba(255,255,255,.16) 0 1px,transparent 1px 4cqw);transform:perspective(34cqw) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(to top,#000 10%,transparent 90%);mask-image:linear-gradient(to top,#000 10%,transparent 90%);animation:run 1.6s linear infinite}
+@keyframes run{to{background-position:0 0,0 4cqw}}
+.parts span{position:absolute;bottom:-6cqw;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.9}90%{opacity:.9}100%{transform:translateY(-62cqw) rotate(540deg);opacity:0}}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 45%,transparent 55%,rgba(2,6,16,.65) 100%)}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.flash.go{animation:fl .55s ease-out}
+@keyframes fl{from{opacity:.75}to{opacity:0}}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 8cqw;opacity:0;pointer-events:none;transition:opacity .4s}
+.scene.on{opacity:1}
+.line{overflow:hidden;padding-bottom:.08em;line-height:1.05}
+.line>span{display:block;transform:translateY(108%)}
+.on .line>span{transform:none;transition:transform .8s cubic-bezier(.2,.9,.2,1) var(--d,0s)}
+.line.fl>span{transform:translateX(-108%)}.line.fr>span{transform:translateX(108%)}
+.on .line.fl>span,.on .line.fr>span{transform:none}
+.big{font-size:10.5cqw;font-weight:800;letter-spacing:-.02em}
+.kick{font-size:1.9cqw;font-weight:700;letter-spacing:.32em;color:#9AA5B8;text-transform:uppercase;margin-bottom:1.4cqw}
+.blue{color:#5B9BFF}.gold{color:#F5A623}.red{color:#FF6B6B}.green{color:#2BE07A}.pink{color:#FF7AC6}
+.tick{position:relative;height:12cqw}
+.tick span{position:absolute;left:0;top:0;font-size:10cqw;font-weight:800;letter-spacing:-.02em;white-space:nowrap;opacity:0;transform:translateY(70%)}
+.on .tick span{animation:tk var(--st,.8s) both;animation-delay:calc(var(--i)*var(--st,.8s))}
+.on .tick span.last{animation:tkin .6s both;animation-delay:calc(var(--i)*var(--st,.8s))}
+@keyframes tk{0%{opacity:0;transform:translateY(70%) scale(.9)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-70%)}}
+@keyframes tkin{from{opacity:0;transform:translateY(70%)}to{opacity:1;transform:none}}
+.cd{position:relative;height:30cqw;text-align:center}
+.cd span{position:absolute;inset:0;font-size:28cqw;font-weight:900;line-height:30cqw;opacity:0}
+.on .cd span{animation:pop .9s both;animation-delay:calc(var(--i)*.9s)}
+.on .cd span.last{animation:tkin .6s both;animation-delay:calc(var(--i)*.9s);font-size:22cqw}
+@keyframes pop{0%{opacity:0;transform:scale(2.4)}15%{opacity:1;transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:scale(.5)}}
+.sub{font-size:2.7cqw;font-weight:600;color:#dbe4f5;margin-top:1.6cqw}
+.row{display:flex;align-items:baseline;gap:2.4cqw;margin:.5cqw 0}
+.row .n{font-size:3cqw;font-weight:800;color:#F5A623;min-width:5cqw}
+.row .w{font-size:7.4cqw;font-weight:800;letter-spacing:-.02em}
+.row .d{font-size:1.9cqw;color:#9AA5B8;font-weight:600}
+.stats{display:flex;gap:3cqw}
+.stat{flex:1;border-left:.5cqw solid #2878F0;padding-left:2cqw}
+.stat b{display:block;font-size:11cqw;line-height:1;font-weight:800}
+.stat small{font-size:1.9cqw;color:#9AA5B8;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.split{display:flex;flex-wrap:wrap;font-weight:800;letter-spacing:-.01em;line-height:1}
+.split span{display:inline-block;opacity:0;transform:translateY(-130%) rotate(-14deg)}
+.on .split span{opacity:1;transform:none;transition:all .7s cubic-bezier(.2,1.2,.3,1) calc(var(--d,0s) + var(--i)*70ms)}
+.code{font-size:15cqw;color:#2BE07A}.brand{font-size:7.2cqw}
+.pill{display:inline-block;align-self:flex-start;margin-top:2cqw;background:#D64545;color:#fff;font-weight:800;font-size:2.8cqw;letter-spacing:.08em;padding:.9cqw 2.4cqw;border-radius:99px;opacity:0;transform:scale(.6)}
+.on .pill{opacity:1;transform:none;transition:all .6s cubic-bezier(.2,1.4,.3,1) 1.4s}
+.fade{opacity:0;transform:translateY(1.2cqw)}
+.on .fade{opacity:1;transform:none;transition:all .8s ease var(--d,0s)}
+.cta{font-size:2.6cqw;font-weight:700;color:#fff;margin-top:1cqw;animation:beat 1s ease-in-out infinite}
+@keyframes beat{50%{transform:scale(1.05);color:#F5A623}}
+.bar{position:absolute;left:0;bottom:0;height:.7cqw;background:#F5A623;width:0}
+.ctrl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px 16px;margin-top:14px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btns button{min-width:128px;padding:10px 14px;white-space:nowrap}
+@media (max-width:640px){.ctrl{grid-template-columns:1fr auto}.btns{grid-column:1/-1}.btns button{flex:1}}
+.track{flex:1;min-width:120px;height:6px;border-radius:99px;background:var(--track);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--btn)}
+button{font:inherit;font-weight:700;background:var(--btn);color:var(--btn-ink);border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
+button.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+button:hover{filter:brightness(1.1)}
+.reserve{background:#D64545}
+.rbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:16px;padding:16px 18px;border-radius:12px;background:var(--card);border:1.5px solid var(--line)}
+.rbar b{display:block;font-size:18px}.rbar span{color:var(--muted);font-size:14px}
+button.big{padding:14px 30px;font-size:17px}
+.start{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6cqw;padding:0;border-radius:0;background:rgba(6,10,22,.72);color:#fff;font-size:3cqw;letter-spacing:.04em}
+.start span{display:flex;align-items:center;justify-content:center;width:15cqw;height:15cqw;border-radius:50%;background:#D64545;font-size:6cqw;padding-left:1cqw}
+.start.hide{display:none}
+.time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px;min-width:84px;text-align:right}
+dialog{border:0;border-radius:14px;padding:22px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(5,10,20,.65)}
+dialog h2{margin:0 0 4px;font-size:20px}dialog p{margin:0 0 14px;color:var(--muted);font-size:14px}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line);background:var(--page);color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+#msg{font-size:13px;color:var(--muted);margin-top:10px;min-height:1em}
+@media (prefers-reduced-motion:reduce){.on .line>span,.on .split span{transition-duration:.01s}.bg,.beam,.floor{animation:none}.parts{display:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>EventEase Pro · Reserve your date</h1>
+<div class="stage" id="stage">
+  <div class="bg"></div><div class="beam b1"></div><div class="beam b2"></div><div class="floor"></div><div class="parts" id="parts"></div><div class="vig"></div>
+
+  <section class="scene" style="align-items:center">
+    <div class="kick fade" style="--d:.1s">The countdown begins</div>
+    <div class="cd"><span style="--i:0" class="red">3</span><span style="--i:1" class="gold">2</span><span style="--i:2" class="blue">1</span><span style="--i:3" class="last green">GO.</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="line"><span class="big" style="--d:.1s">BIG MOMENTS</span></div>
+    <div class="line"><span class="big red" style="--d:.7s">DON’T PLAN</span></div>
+    <div class="line"><span class="big gold" style="--d:1.3s">THEMSELVES.</span></div>
+    <div class="line"><span class="sub" style="--d:2.4s">So we built the system that does.</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="kick fade" style="--d:.1s">Every occasion</div>
+    <div class="tick" style="--st:1.5s">
+      <span style="--i:0" class="red">Birthdays</span><span style="--i:1" class="blue">Weddings</span>
+      <span style="--i:2" class="gold">Debuts</span><span style="--i:3" class="green">Graduations</span>
+      <span style="--i:4" class="pink">Christenings</span><span style="--i:5" class="blue">Reunions</span>
+      <span style="--i:6" class="last gold">Corporate Events</span>
+    </div>
+    <div class="line"><span class="sub" style="--d:10s">One system. Zero stress.</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="kick fade" style="--d:.1s">By the numbers</div>
+    <div class="stats">
+      <div class="stat fade" style="--d:.3s"><b data-count="15">0</b><small>Occasion types</small></div>
+      <div class="stat fade" style="--d:.9s"><b data-count="3">0</b><small>Packages each</small></div>
+      <div class="stat fade" style="--d:1.5s"><b class="green">0</b><small>Double-bookings</small></div>
+    </div>
+    <div class="line"><span class="sub" style="--d:2.6s">Choose a package. Lock your date.</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="kick fade" style="--d:.1s">How it works</div>
+    <div class="row"><span class="n fade" style="--d:.2s">01</span><div class="line fl"><span class="w" style="--d:.2s">CHOOSE</span></div><span class="d fade" style="--d:.9s">Your occasion and package</span></div>
+    <div class="row"><span class="n fade" style="--d:1.2s">02</span><div class="line fr"><span class="w blue" style="--d:1.2s">SCHEDULE</span></div><span class="d fade" style="--d:1.9s">Pick a date on the calendar</span></div>
+    <div class="row"><span class="n fade" style="--d:2.2s">03</span><div class="line fl"><span class="w gold" style="--d:2.2s">CONFIRM</span></div><span class="d fade" style="--d:2.9s">Pay in full or in parts</span></div>
+    <div class="row"><span class="n fade" style="--d:3.2s">04</span><div class="line fr"><span class="w green" style="--d:3.2s">CELEBRATE</span></div><span class="d fade" style="--d:3.9s">We handle the details</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="kick fade" style="--d:.1s">Built-in tools</div>
+    <div class="tick" style="--st:.9s">
+      <span style="--i:0" class="blue">Live Calendar</span><span style="--i:1" class="green">Payment Tracking</span>
+      <span style="--i:2" class="gold">Instant Receipts</span><span style="--i:3" class="pink">Smart Reports</span>
+      <span style="--i:4" class="last red">QR Discounts</span>
+    </div>
+    <div class="line"><span class="sub" style="--d:4s">Everything an event needs.</span></div>
+  </section>
+
+  <section class="scene">
+    <div class="kick fade" style="--d:.1s">Limited-time offer</div>
+    <div class="split code" data-split="SAVE20" style="--d:.3s"></div>
+    <div class="pill">20% OFF · ANY PACKAGE</div>
+    <div class="sub fade" style="--d:2.2s">Enter the code when you reserve.</div>
+  </section>
+
+  <section class="scene" style="align-items:center;text-align:center">
+    <div class="kick fade" style="--d:.1s">EventEase Pro</div>
+    <div class="split big" data-split="RESERVE" style="--d:.3s;justify-content:center"></div>
+    <div class="split big gold" data-split="YOUR DATE." style="--d:.8s;justify-content:center"></div>
+    <div class="sub fade" style="--d:1.9s" id="contact"></div>
+    <div class="cta fade" style="--d:2.6s">Call or message us to reserve</div>
+  </section>
+
+  <button class="start" id="start" type="button"><span>▶</span>Play with music</button>
+  <div class="flash" id="flash"></div>
+  <div class="bar" id="bar"></div>
+</div>
+
+<div class="ctrl">
+  <div class="btns">
+  <button id="replay" type="button">↻ Replay</button>
+  <button id="pause" class="alt" type="button">⏸ Pause</button>
+  <button id="snd" class="alt" type="button" aria-pressed="false">🔇 Sound off</button>
+  </div>
+  
+  <div class="track"><i id="fill"></i></div>
+  <div class="time" id="time">0:00</div>
+  
+</div>
+
+
+
+
+
+<dialog id="dlg">
+  <h2>Reserve your date</h2>
+  <p>Send your request and the EventEase team will confirm availability.</p>
+  <form id="frm" method="dialog">
+    <label for="f-name">Full name</label><input id="f-name" required>
+    <label for="f-contact">Contact number (11 digits)</label><input id="f-contact" inputmode="numeric" pattern="[0-9]{11}" maxlength="11" required>
+    <label for="f-occ">Occasion</label><select id="f-occ" required></select>
+    <div class="two">
+      <div><label for="f-date">Date</label><input id="f-date" type="date" required></div>
+      <div><label for="f-guests">Guests</label><input id="f-guests" type="number" min="1" required></div>
+    </div>
+    <label for="f-code">Discount code (optional)</label><input id="f-code" placeholder="SAVE20">
+    <div class="acts">
+      <button type="submit" id="send">Send reservation</button>
+      <button type="button" class="alt" id="copy">Copy details</button>
+      <button type="button" class="alt" id="close">Close</button>
+    </div>
+    <div id="msg" role="status"></div>
+  </form>
+</dialog>
+</main>
+
+<script>
+(function(){
+  // Edit these two lines to your real contact details.
+  var PHONE='0922 385 9137', EMAIL='eventease67@gmail.com';
+  // Get a free access key at web3forms.com (enter your email, the key is sent to your inbox), then paste it below.
+  var ACCESS_KEY='81925ba0-0c18-46a6-b4e1-1eb5f2849176';
+  document.getElementById('contact').textContent=PHONE+'  ·  '+EMAIL;
+  
+  var parts=document.getElementById('parts'),pc=['#F5A623','#5B9BFF','#FF7AC6','#2BE07A','#FF6B6B','#ffffff'];
+  for(var k=0;k<34;k++){
+    var sp=document.createElement('span'),z=.8+Math.random()*1.6;
+    sp.style.cssText='left:'+(Math.random()*100)+'%;width:'+z+'cqw;height:'+(Math.random()<.5?z:z*.4)+'cqw;background:'+pc[k%pc.length]+';border-radius:'+(Math.random()<.4?'50%':'2px')+';animation-duration:'+(7+Math.random()*9)+'s;animation-delay:-'+(Math.random()*14)+'s';
+    parts.appendChild(sp);
+  }
+
+  document.querySelectorAll('[data-split]').forEach(function(el){
+    el.innerHTML=el.dataset.split.split('').map(function(c,i){return '<span style="--i:'+i+'">'+(c===' '?'&nbsp;':c)+'</span>'}).join('');
+  });
+  var scenes=[].slice.call(document.querySelectorAll('.scene'));
+  var durs=[3700,4600,12800,5000,6200,5600,5200,0];
+  durs[7]=6000;
+  var total=durs.reduce(function(a,b){return a+b},0);
+  var bar=document.getElementById('bar'),fill=document.getElementById('fill'),timeEl=document.getElementById('time'),flash=document.getElementById('flash');
+  var cur=-1,start=0,raf=0,soundOn=false,ctx=null,master=null;
+
+  function fmt(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+  function counters(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var to=+el.dataset.count,t0=performance.now();
+      (function step(n){var p=Math.min((n-t0)/1400,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})(t0);
+    });
+  }
+  function setScene(i){
+    scenes.forEach(function(s,k){s.classList.toggle('on',k===i)});
+    cur=i;
+    flash.classList.remove('go');void flash.offsetWidth;flash.classList.add('go');
+    if(i===3)counters();
+    document.getElementById('stage').dataset.t=i;
+    if(soundOn&&ctx)hit(ctx.currentTime);
+  }
+  function tick(now){
+    var e=Math.min(now-start,total),acc=0,idx=0;
+    lastE=e;
+    for(var i=0;i<durs.length;i++){idx=i;if(e<acc+durs[i])break;acc+=durs[i]}
+    if(idx!==cur)setScene(idx);
+    var p=(e/total*100)+'%';
+    bar.style.width=p;fill.style.width=p;timeEl.textContent=fmt(e)+' / '+fmt(total);
+    if(e<total)raf=requestAnimationFrame(tick);
+  }
+
+  // Original synthesized soundtrack: bass drone + 120 BPM pulse + scene hits (Web Audio, no files).
+  function note(type,f0,f1,t,len,vol,dest){
+    var o=ctx.createOscillator(),g=ctx.createGain();
+    o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+len);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+len);
+    o.connect(g);g.connect(dest);o.start(t);o.stop(t+len+.02);
+  }
+  function hit(t){note('sawtooth',900,90,t,.5,.18,master)}
+  function startMusic(){
+    if(!ctx)return;
+    if(master)try{master.disconnect()}catch(e){}
+    master=ctx.createGain();master.gain.value=.5;master.connect(ctx.destination);
+    var t=ctx.currentTime+.05,beats=Math.ceil(total/500);
+    for(var b=0;b<beats;b++){
+      note('sine',150,45,t+b*.5,.3,.6,master);
+      if(b%2===1)note('square',220,110,t+b*.5,.08,.05,master);
+      if(b%8===0)note('triangle',55,55,t+b*.5,3.6,.25,master);
+    }
+  }
+  // Soundtrack: put your song in the SAME folder as this file and name it audio.mp3
+  var localAudio=null;
+  function stopSong(){if(localAudio){localAudio.pause();localAudio=null}}
+  function loadSong(){
+    stopSong();
+    var a=new Audio('audio.mp3');
+    localAudio=a;
+    a.addEventListener('error',function(){snd.textContent='⚠ audio.mp3 not found'});
+    var pr=a.play();
+    if(pr&&pr.catch)pr.catch(function(err){snd.textContent=(err&&err.name==='NotAllowedError')?'🔇 Tap Sound to allow':'⚠ audio.mp3 not found'});
+  }
+  function play(){
+    cancelAnimationFrame(raf);frozen.forEach(function(a){try{a.play()}catch(e){}});frozen=[];paused=false;document.getElementById('pause').textContent='⏸ Pause';
+    scenes.forEach(function(s){s.classList.remove('on')});
+    cur=-1;void document.body.offsetWidth;
+    document.getElementById('start').classList.add('hide');
+    if(soundOn)loadSong();
+    start=performance.now();raf=requestAnimationFrame(tick);
+  }
+  document.getElementById('replay').addEventListener('click',play);
+  var paused=false,lastE=0,frozen=[],pbtn=document.getElementById('pause');
+  function setPaused(on){
+    if(on===paused)return;
+    if(on){
+      if(cur<0||lastE>=total)return;
+      paused=true;cancelAnimationFrame(raf);
+      frozen=document.getAnimations().filter(function(a){return a.playState==='running'});
+      frozen.forEach(function(a){a.pause()});
+      if(localAudio)localAudio.pause();
+      pbtn.textContent='▶ Resume';
+    }else{
+      paused=false;
+      frozen.forEach(function(a){a.play()});frozen=[];
+      if(localAudio){var pr=localAudio.play();if(pr&&pr.catch)pr.catch(function(){})}
+      start=performance.now()-lastE;raf=requestAnimationFrame(tick);
+      pbtn.textContent='⏸ Pause';
+    }
+  }
+  pbtn.addEventListener('click',function(){setPaused(!paused)});
+  var snd=document.getElementById('snd');
+  snd.addEventListener('click',function(){
+    soundOn=!soundOn;snd.setAttribute('aria-pressed',soundOn);
+    snd.textContent=soundOn?'🔊 Sound on':'🔇 Sound off';
+    if(soundOn){
+      try{play()}
+      catch(e){soundOn=false;snd.textContent='🔇 Sound unavailable'}
+    }else{stopSong()}
+  });
+
+  // Reservation request form
+  var dlg=document.getElementById('dlg'),msg=document.getElementById('msg'),sel=document.getElementById('f-occ');
+  ['Birthday','Wedding','Anniversary','Graduation','Debut','Christening','Christmas Party','Baby Shower','Corporate Event','Seminar / Workshop','Awarding Ceremony','Housewarming','Family Reunion','School Event','Other'].forEach(function(o){
+    var op=document.createElement('option');op.value=o;op.textContent=o;sel.appendChild(op);
+  });
+  var d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  document.getElementById('f-date').min=d.toISOString().slice(0,10);
+  function openForm(){msg.textContent='';if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')}
+  
+  
+  document.getElementById('close').addEventListener('click',function(){dlg.close()});
+  function details(){
+    var v=function(id){return document.getElementById(id).value.trim()};
+    return 'EventEase reservation request\n\nName: '+v('f-name')+'\nContact: '+v('f-contact')+'\nOccasion: '+v('f-occ')+'\nDate: '+v('f-date')+'\nGuests: '+v('f-guests')+'\nDiscount code: '+(v('f-code')||'none');
+  }
+  document.getElementById('frm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=function(id){return document.getElementById(id).value.trim()};
+    var sendBtn=document.getElementById('send');
+    if(ACCESS_KEY.indexOf('PASTE')===0){msg.textContent='Setup needed: paste your Web3Forms access key into ACCESS_KEY in the script.';return}
+    sendBtn.disabled=true;msg.textContent='Sending your request…';
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({access_key:ACCESS_KEY,subject:'New EventEase reservation: '+v('f-occ')+' on '+v('f-date'),from_name:'EventEase Reservation Form',
+        name:v('f-name'),contact_number:v('f-contact'),occasion:v('f-occ'),event_date:v('f-date'),guests:v('f-guests'),discount_code:v('f-code')||'none'})})
+    .then(function(r){return r.json()})
+    .then(function(j){
+      if(j.success){msg.textContent='Request sent! The EventEase team will contact you soon.';document.getElementById('frm').reset()}
+      else{msg.textContent='Could not send: '+(j.message||'please try again')+'. You can also call '+PHONE+'.'}
+    })
+    .catch(function(){msg.textContent='No connection. Please use Copy details and send it to '+EMAIL+', or call '+PHONE+'.'})
+    .then(function(){sendBtn.disabled=false});
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    var f=document.getElementById('frm');
+    if(!f.reportValidity())return;
+    var t=details();
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){msg.textContent='Details copied. Send them to '+EMAIL+' or '+PHONE+'.'},function(){msg.textContent='Copy was blocked. Please select and copy the details manually.'});
+  });
+
+  var startBtn=document.getElementById('start');
+  startBtn.addEventListener('click',function(){
+    startBtn.classList.add('hide');
+    soundOn=true;snd.setAttribute('aria-pressed',true);snd.textContent='🔊 Sound on';
+    play();
+  });
+})();
+</script>
+</body>
+</html>
